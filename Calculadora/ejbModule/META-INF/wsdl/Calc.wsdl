@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.agrotis.com.br/Calc/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Calc" targetNamespace="http://www.agrotis.com.br/Calc/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.agrotis.com.br/Calc/">
+      <xsd:element name="somarEnvio">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="valor1" type="xsd:int" />
+          	<xsd:element name="valor2" type="xsd:int"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="somarRetorno">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="resultado" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="somarRequest">
+    <wsdl:part element="tns:somarEnvio" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="somarResponse">
+    <wsdl:part element="tns:somarRetorno" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="Calc">
+    <wsdl:operation name="somar">
+      <wsdl:input message="tns:somarRequest"/>
+      <wsdl:output message="tns:somarResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalcSOAP" type="tns:Calc">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="somar">
+      <soap:operation soapAction="http://www.agrotis.com.br/Calc/somar"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Calc">
+    <wsdl:port binding="tns:CalcSOAP" name="CalcSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
